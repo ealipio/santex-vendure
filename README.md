@@ -1,11 +1,3 @@
-## Goals
-
-- Get familiar with Styled Components as styling strategy
-- Get a good understanding of Apollo Client and how to integrate Graphql to a React front end application
-- Use Graphql Fragments
-- Acquire good practices with Jest and testing both components and hooks
-- Review React hooks concepts and develop custom hooks
-
 ## Requirements
 
 - Implement a home page with a grid of products that includes product picture, description and price (from any product variant). Hint: use Graphql query.
@@ -21,6 +13,13 @@ Even thought the app is already connected to a graphql endpoint, the trainee can
 
 - https://docs.vendure.io/graphql-api/shop/
 - https://demo.vendure.io/shop-api
+
+Tech:
+
+- Tailwindcss
+- vite/pnpm
+- Apollo Client
+- React Testing Library
 
 ## Scripts
 
