@@ -1,3 +1,7 @@
+## Live Demo:
+
+- https://santex-vendure.vercel.app/
+
 ## Requirements
 
 - Implement a home page with a grid of products that includes product picture, description and price (from any product variant). Hint: use Graphql query.
