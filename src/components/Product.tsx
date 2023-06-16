@@ -1,46 +1,81 @@
-import { FC } from 'react';
-import { IProductFromCollections } from '../types/product';
+import { FC, useState } from 'react';
+
+import { ShoppingCart } from 'lucide-react';
+
+import { cn } from '../utils/tailwind';
+
+import { Button } from './ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
+
+import { IProduct } from '../types/product';
 import { MutationFunctionOptions } from '@apollo/client';
+import VariantList from './VariantList';
 
 interface IProductProps {
-  product: IProductFromCollections;
+  product: IProduct;
   onBuy: (options: MutationFunctionOptions) => void;
 }
 
 const Product: FC<IProductProps> = ({ product, onBuy }) => {
-  const handleBuyAction = (productVariantId: string) => () => {
+  const [selectedProductVariant, setSelectedProductVariant] =
+    useState<string>('');
+
+  const handleBuy = () => {
     const variables = {
-      productVariantId,
+      productVariantId: selectedProductVariant,
       quantity: 1,
     };
     onBuy({ variables });
   };
 
+  const handleBuyAction = (productVariantId: string) =>
+    setSelectedProductVariant(productVariantId);
+
   return (
     <>
-      <div key={product.id}>
-        <b>{product.name}</b>
-        <p>Description: {product.product.description}</p>
-        <p className="bg-slate-800 text-green-400">
-          stock: {product.stockLevel}
-        </p>
-        <em>
-          Price:{product.priceWithTax} {product.currencyCode}
-        </em>
-        <p>SKU: {product.sku}</p>
-        <img
-          src={product.product.assets[0].preview}
-          width={200}
-          loading="lazy"
-        />
-
-        <button
-          onClick={handleBuyAction(product.id)}
-          className="bg-slate-600 text-white m-2 p-4 text-lg cursor-pointer hover:bg-slate-800"
-        >
-          Buy 1
-        </button>
-      </div>
+      <Card className={cn('w-[600px]', 'm-2')} key={product.id}>
+        <CardHeader>
+          <CardTitle>{product.name}</CardTitle>
+          <CardDescription>{product.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="bg-indigo-300">
+            <img
+              className="object-cover h-48 w-full"
+              src={product.assets[0].preview}
+              loading="lazy"
+            />
+          </div>
+          <div className=" flex items-center space-x-4 rounded-md border p-4">
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-medium leading-none">Variants:</p>
+              <div className="text-sm text-muted-foreground">
+                <VariantList
+                  variantItems={product.variantList.items}
+                  onSelectVariantProduct={handleBuyAction}
+                />
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </CardContent>
+        <CardFooter>
+          <Button
+            className="w-full"
+            disabled={!selectedProductVariant}
+            onClick={handleBuy}
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" /> Buy this product
+          </Button>
+        </CardFooter>
+      </Card>
     </>
   );
 };

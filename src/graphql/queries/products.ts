@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
-import { ITEM_FRAGMENT, SEARCH_FRAGMENT } from '../fragments/product';
+import { PRODUCT_ITEM_FRAGMENT, SEARCH_FRAGMENT } from '../fragments/product';
 
 export const GET_PRODUCTS = gql`
-  ${ITEM_FRAGMENT}
+  ${PRODUCT_ITEM_FRAGMENT}
   query getProducts {
     products {
       totalItems

@@ -20,6 +20,7 @@ Tech:
 - vite/pnpm
 - Apollo Client
 - React Testing Library
+- Icons: https://lucide.dev/
 
 ## Scripts
 

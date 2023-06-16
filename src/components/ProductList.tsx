@@ -1,29 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { useProductsFromCollections, useAddItemToOrder } from '../hooks';
-import { IProductFromCollections } from '../types/product';
-import { parseDataFromCollections } from '../utils/helpers';
+import { useProducts, useAddItemToOrder } from '../hooks';
+import { IProduct } from '../types/product';
 import Product from './Product';
 
 function ProductList() {
-  const { loading, error, data } = useProductsFromCollections();
+  const { loading, error, data } = useProducts();
 
   const [AddItemToOrder, { data: dataFromOrder }] = useAddItemToOrder();
 
-  const [products, setProducts] = useState<IProductFromCollections[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
-  console.log(dataFromOrder);
+  //console.log(dataFromOrder);
   useEffect(() => {
-    if (data?.collections) {
-      /**
-       * I'm parsing the data since using the search method
-       * from API is returning an empty array so I'm parsing the
-       * data and removing the repeated items.
-       */
-      const parsedProduct = parseDataFromCollections(data?.collections);
-      setProducts(parsedProduct);
+    if (data?.products) {
+      setProducts(data?.products?.items);
     }
-  }, [data?.collections]);
+  }, [data?.products]);
 
   if (loading) {
     return <div className="card">Loading</div>;
@@ -33,11 +26,15 @@ function ProductList() {
     return <p>Error :(</p>;
   }
 
-  const productList = products.map((product: IProductFromCollections) => (
+  const productList = products.map((product: IProduct) => (
     <Product key={product.id} product={product} onBuy={AddItemToOrder} />
   ));
 
-  return <>{productList.length ? productList : 'No Products'}</>;
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2">
+      {productList.length ? productList : 'No Products'}
+    </div>
+  );
 }
 
 export default ProductList;

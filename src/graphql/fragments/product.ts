@@ -15,14 +15,21 @@ export const ASSETS_FRAGMENT = gql`
   }
 `;
 
-export const ITEM_FRAGMENT = gql`
+export const PRODUCT_ITEM_FRAGMENT = gql`
   ${ASSETS_FRAGMENT}
   fragment ItemFields on Product {
     id
     name
-    slug
     description
-    createdAt
+    variantList {
+      totalItems
+      items {
+        id
+        priceWithTax
+        name
+        currencyCode
+      }
+    }
     assets {
       ...AssetFields
     }
