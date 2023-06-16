@@ -24,3 +24,30 @@ export const SEARCH_QUERY = gql`
     }
   }
 `;
+
+export const GET_PRODUCTS_FROM_COLLECTIONS = gql`
+  query getProductsFromCollections {
+    collections(options: {}) {
+      items {
+        productVariants(options: {}) {
+          items {
+            id
+            productId
+            product {
+              description
+              assets {
+                id
+                preview
+              }
+            }
+            name
+            sku
+            stockLevel
+            currencyCode
+            priceWithTax
+          }
+        }
+      }
+    }
+  }
+`;
