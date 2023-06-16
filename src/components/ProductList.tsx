@@ -1,17 +1,26 @@
 import { useEffect, useState } from 'react';
 
 import { useProducts, useAddItemToOrder } from '../hooks';
+import { useShopStore } from '../store/shopStore';
 import { IProduct } from '../types/product';
 import Product from './Product';
 
 function ProductList() {
+  const setSubTotal = useShopStore((state) => state.setSubTotal);
+
   const { loading, error, data } = useProducts();
 
   const [AddItemToOrder, { data: dataFromOrder }] = useAddItemToOrder();
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  //console.log(dataFromOrder);
+  useEffect(() => {
+    if (dataFromOrder?.addItemToOrder) {
+      // save to storage
+      setSubTotal(dataFromOrder?.addItemToOrder?.subTotal);
+    }
+  }, [dataFromOrder?.addItemToOrder, setSubTotal]);
+
   useEffect(() => {
     if (data?.products) {
       setProducts(data?.products?.items);
