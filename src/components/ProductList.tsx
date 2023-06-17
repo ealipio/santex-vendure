@@ -1,5 +1,15 @@
 import { useEffect, useState } from 'react';
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../components/ui/table';
+
 import { useProducts, useAddItemToOrder } from '../hooks';
 import { useShopStore } from '../store/shopStore';
 import { IProduct } from '../types/product';
@@ -35,14 +45,27 @@ function ProductList() {
     return <p>Error :(</p>;
   }
 
-  const productList = products.map((product: IProduct) => (
-    <Product key={product.id} product={product} onBuy={AddItemToOrder} />
-  ));
+  if (products.length === 0) {
+    return <h3> no products</h3>;
+  }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2">
-      {productList.length ? productList : 'No Products'}
-    </div>
+    <Table className="">
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Name</TableHead>
+          <TableHead>Preview</TableHead>
+          <TableHead className="hidden md:table-cell">Description</TableHead>
+          <TableHead className="text-center">Variants</TableHead>
+          <TableHead>Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {products.map((product: IProduct) => (
+          <Product key={product.id} product={product} onBuy={AddItemToOrder} />
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 

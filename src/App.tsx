@@ -3,7 +3,7 @@ import Header from './components/Header';
 
 function App() {
   return (
-    <div className="container w-full bg-slate-600">
+    <div className="w-full md:container bg-zinc-200 antialiased md:p-0">
       <Header />
       <ProductList />
     </div>

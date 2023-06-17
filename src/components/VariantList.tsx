@@ -1,6 +1,14 @@
 import { FC } from 'react';
-import { Label } from '../components/ui/label';
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 import { IVariantProduct } from '../types/product';
 
@@ -17,23 +25,28 @@ const VariantList: FC<IVariantListProps> = ({
     onSelectVariantProduct(productVariantId);
   };
 
-  const variantList = variantItems.map((item) => {
-    return (
-      <div key={item.id} className="flex items-center space-x-2">
-        <RadioGroupItem value={item.id} id={item.id} />
-        <Label htmlFor={item.id}>
-          {item.name}:{' '}
-          <span className="bg-green-600 text-white rounded-md px-2 text-xs">
-            {item.priceWithTax} {item.currencyCode}
-          </span>
-        </Label>
-      </div>
-    );
-  });
-
   return (
     <>
-      <RadioGroup onValueChange={onSelectVariantItem}>{variantList}</RadioGroup>
+      <Select onValueChange={onSelectVariantItem}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select a product" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Variant</SelectLabel>
+            {variantItems.map((item) => {
+              return (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.name}
+                  <span className="bg-green-600 text-white rounded-md px-1 mx-1 text-xs whitespace-nowrap">
+                    {item.priceWithTax} {item.currencyCode}
+                  </span>
+                </SelectItem>
+              );
+            })}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </>
   );
 };

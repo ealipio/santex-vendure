@@ -20,10 +20,10 @@ Even thought the app is already connected to a graphql endpoint, the trainee can
 
 Tech:
 
-- Tailwindcss
+- Tailwindcss/Shadcn
 - vite/pnpm
-- Apollo Client
-- React Testing Library
+- GraphQL: Apollo Client
+- React Testing Library/ CyPress (@todo)
 - Icons: https://lucide.dev/
 
 ## Scripts

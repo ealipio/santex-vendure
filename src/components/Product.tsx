@@ -2,17 +2,9 @@ import { FC, useState } from 'react';
 
 import { ShoppingCart } from 'lucide-react';
 
-import { cn } from '../utils/tailwind';
-
 import { Button } from './ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
+
+import { TableCell, TableRow } from '../components/ui/table';
 
 import { IProduct } from '../types/product';
 import { MutationFunctionOptions } from '@apollo/client';
@@ -40,42 +32,36 @@ const Product: FC<IProductProps> = ({ product, onBuy }) => {
 
   return (
     <>
-      <Card className={cn('w-[600px]', 'm-2')} key={product.id}>
-        <CardHeader>
-          <CardTitle>{product.name}</CardTitle>
-          <CardDescription>{product.description}</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="bg-indigo-300">
-            <img
-              className="object-cover h-48 w-full"
-              src={product.assets[0].preview}
-              loading="lazy"
-            />
-          </div>
-          <div className=" flex items-center space-x-4 rounded-md border p-4">
-            <div className="flex-1 space-y-1">
-              <p className="text-sm font-medium leading-none">Variants:</p>
-              <div className="text-sm text-muted-foreground">
-                <VariantList
-                  variantItems={product.variantList.items}
-                  onSelectVariantProduct={handleBuyAction}
-                />
-              </div>
-            </div>
-          </div>
-          <div></div>
-        </CardContent>
-        <CardFooter>
+      <TableRow key={product.id}>
+        <TableCell className="font-medium">{product.name}</TableCell>
+        <TableCell>
+          <img
+            className="object-contain h-40 w-full"
+            src={product.assets[0].preview}
+            loading="lazy"
+          />
+        </TableCell>
+        <TableCell className="hidden md:table-cell">
+          {product.description}
+        </TableCell>
+
+        <TableCell>
+          <VariantList
+            variantItems={product.variantList.items}
+            onSelectVariantProduct={handleBuyAction}
+          />
+        </TableCell>
+
+        <TableCell>
           <Button
-            className="w-full"
+            className="w-full whitespace-nowrap"
             disabled={!selectedProductVariant}
             onClick={handleBuy}
           >
             <ShoppingCart className="mr-2 h-4 w-4" /> Buy this product
           </Button>
-        </CardFooter>
-      </Card>
+        </TableCell>
+      </TableRow>
     </>
   );
 };
