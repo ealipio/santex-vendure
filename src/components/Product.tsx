@@ -34,7 +34,7 @@ const Product: FC<IProductProps> = ({ product, onBuy }) => {
     <>
       <TableRow key={product.id}>
         <TableCell className="font-medium">{product.name}</TableCell>
-        <TableCell>
+        <TableCell className="hidden md:table-cell">
           <img
             className="object-contain h-40 w-full"
             src={product.assets[0].preview}
@@ -58,7 +58,7 @@ const Product: FC<IProductProps> = ({ product, onBuy }) => {
             disabled={!selectedProductVariant}
             onClick={handleBuy}
           >
-            <ShoppingCart className="mr-2 h-4 w-4" /> Buy this product
+            <ShoppingCart className="mr-2 h-4 w-4" /> Buy
           </Button>
         </TableCell>
       </TableRow>

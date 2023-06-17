@@ -48,11 +48,11 @@ function ProductList() {
   }
 
   return (
-    <Table className="">
+    <Table className="mt-4">
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Name</TableHead>
-          <TableHead>Preview</TableHead>
+          <TableHead className="hidden md:table-cell">Preview</TableHead>
           <TableHead className="hidden md:table-cell">Description</TableHead>
           <TableHead className="text-center">Variants</TableHead>
           <TableHead>Action</TableHead>
